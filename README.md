@@ -38,10 +38,6 @@ Beyond-U-Net-plusplus/
 ├── results/
 └── outputs/
 
-yaml
-Copy code
-
----
 
 ## Installation
 
