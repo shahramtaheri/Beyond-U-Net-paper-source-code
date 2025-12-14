@@ -1,0 +1,15 @@
+# configs/lidc_2d_fold4.yaml
+defaults: configs/default.yaml
+
+data:
+  img_key: image
+  mask_key: mask
+  splits:
+    fold_json: data/splits/fold_4.json
+
+train:
+  outdir: outputs/fold4
+
+seed:
+  seed: 42
+  deterministic: true
