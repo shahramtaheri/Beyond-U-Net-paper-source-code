@@ -1,0 +1,59 @@
+# configs/default.yaml
+# Common configuration used by prepare_lidc.py and create_folds.py (and as a base for training configs)
+
+seed:
+  seed: 42
+  deterministic: true
+
+data:
+  # These keys are used by train.py/evaluate.py when reading fold JSON items
+  img_key: image
+  mask_key: mask
+
+  # Your fold json will be set in fold-specific configs
+  splits:
+    fold_json: data/splits/fold_1.json
+
+train:
+  outdir: outputs/fold1
+  epochs: 100
+  batch_size: 8
+  num_workers: 4
+  pin_memory: true
+  amp: true
+  grad_clip: 1.0
+
+  early_stopping_patience: 15
+  early_stopping_min_delta: 0.0
+  write_csv: true
+
+optim:
+  name: adam
+  lr: 1.0e-4
+  weight_decay: 1.0e-5
+
+scheduler:
+  name: reduce_on_plateau
+  factor: 0.5
+  patience: 5
+  min_lr: 1.0e-6
+
+model:
+  name: ResidualAttentionUNetPP
+  in_channels: 1
+  out_channels: 1
+  filters: [64, 128, 256, 512, 1024]
+
+loss:
+  name: HybridDiceFocalLoss
+  lambda: 0.5
+  alpha: 0.25
+  gamma: 2.0
+  dice_smooth: 1.0
+
+augmentation:
+  rotate_limit: 15
+  p_flip: 0.5
+  p_rotate: 0.5
+  p_elastic: 0.2
+  p_noise: 0.2
